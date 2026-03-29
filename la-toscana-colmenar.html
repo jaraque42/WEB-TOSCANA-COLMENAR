@@ -1,0 +1,1925 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Toscana Colmenar – Sabor auténtico en cada bocado</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --olive: #5a6b3a;
+    --olive-light: #7a8f54;
+    --olive-dark: #3d4a27;
+    --red: #c0392b;
+    --red-soft: #d9534f;
+    --cream: #f7f3eb;
+    --cream-dark: #ede7d9;
+    --black: #1a1a18;
+    --black-soft: #2c2c28;
+    --white: #ffffff;
+    --gold: #c9a84c;
+    --text-body: #3a3a35;
+    --text-muted: #7a7a72;
+    --shadow: 0 20px 60px rgba(0,0,0,0.12);
+    --shadow-sm: 0 4px 20px rgba(0,0,0,0.08);
+    --radius: 16px;
+    --radius-sm: 8px;
+    --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text-body);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--cream); }
+  ::-webkit-scrollbar-thumb { background: var(--olive); border-radius: 3px; }
+
+  /* ── UTILITIES ── */
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+  .section { padding: 100px 0; }
+  .section-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--olive);
+    background: rgba(90,107,58,0.1);
+    padding: 6px 16px;
+    border-radius: 100px;
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--black);
+    margin-bottom: 20px;
+  }
+  .section-subtitle {
+    font-size: 16px;
+    color: var(--text-muted);
+    max-width: 540px;
+    line-height: 1.7;
+  }
+
+  /* ── FADE IN ── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .fade-up.delay-1 { transition-delay: 0.1s; }
+  .fade-up.delay-2 { transition-delay: 0.2s; }
+  .fade-up.delay-3 { transition-delay: 0.3s; }
+  .fade-up.delay-4 { transition-delay: 0.4s; }
+
+  /* ══════════════════════════════════════════
+     NAVBAR
+  ══════════════════════════════════════════ */
+  .navbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    padding: 0 24px;
+    transition: var(--transition);
+  }
+  .navbar.scrolled {
+    background: rgba(247,243,235,0.96);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 2px 30px rgba(0,0,0,0.08);
+    padding: 0 24px;
+  }
+  .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--white);
+    text-decoration: none;
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+  }
+  .navbar.scrolled .nav-logo { color: var(--black); }
+  .nav-logo span { font-size: 10px; font-weight: 400; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); font-family: 'DM Sans', sans-serif; }
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    color: rgba(255,255,255,0.9);
+    text-decoration: none;
+    transition: var(--transition);
+  }
+  .navbar.scrolled .nav-links a { color: var(--text-body); }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta {
+    background: var(--red);
+    color: var(--white) !important;
+    padding: 10px 24px;
+    border-radius: 100px;
+    transition: var(--transition) !important;
+  }
+  .nav-cta:hover { background: var(--red-soft) !important; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(192,57,43,0.4); }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+  .hamburger span { display: block; width: 24px; height: 2px; background: var(--white); border-radius: 2px; transition: var(--transition); }
+  .navbar.scrolled .hamburger span { background: var(--black); }
+
+  /* ══════════════════════════════════════════
+     HERO
+  ══════════════════════════════════════════ */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(135deg, rgba(26,26,24,0.82) 0%, rgba(90,107,58,0.5) 50%, rgba(192,57,43,0.45) 100%),
+      url('https://images.unsplash.com/photo-1513104890138-7c749659a591?w=1600&q=80') center/cover no-repeat;
+    transform-origin: center;
+    animation: slowZoom 20s ease-in-out infinite alternate;
+  }
+  @keyframes slowZoom {
+    from { transform: scale(1); }
+    to { transform: scale(1.06); }
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 30%, rgba(26,26,24,0.4) 100%);
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    width: 100%;
+  }
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 8px 20px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 28px;
+    animation: fadeDown 0.8s ease 0.2s both;
+  }
+  .hero-tag::before { content: '★'; font-size: 10px; }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(48px, 7vw, 86px);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.0;
+    margin-bottom: 24px;
+    animation: fadeDown 0.8s ease 0.35s both;
+  }
+  .hero-title em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--gold);
+  }
+  .hero-subtitle {
+    font-size: clamp(15px, 2vw, 18px);
+    color: rgba(255,255,255,0.82);
+    max-width: 520px;
+    line-height: 1.7;
+    margin-bottom: 40px;
+    font-weight: 300;
+    animation: fadeDown 0.8s ease 0.5s both;
+  }
+  .hero-btns {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    animation: fadeDown 0.8s ease 0.65s both;
+  }
+  .btn-primary {
+    background: var(--red);
+    color: var(--white);
+    padding: 16px 36px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 8px 32px rgba(192,57,43,0.4);
+  }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(192,57,43,0.5); background: var(--red-soft); }
+  .btn-secondary {
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(10px);
+    color: var(--white);
+    padding: 16px 36px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1.5px solid rgba(255,255,255,0.3);
+    cursor: pointer;
+    transition: var(--transition);
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.2); transform: translateY(-3px); }
+  .hero-scroll {
+    position: absolute;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: rgba(255,255,255,0.5);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    animation: bounce 2s ease-in-out infinite;
+    z-index: 2;
+  }
+  .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent); }
+  @keyframes bounce { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(8px); } }
+  @keyframes fadeDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* HERO STATS BAR */
+  .hero-stats {
+    position: absolute;
+    bottom: 0;
+    left: 0; right: 0;
+    background: rgba(26,26,24,0.7);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    z-index: 3;
+  }
+  .hero-stats-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 24px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    text-align: center;
+  }
+  .stat-item {
+    padding: 8px 16px;
+    border-right: 1px solid rgba(255,255,255,0.1);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-num {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--gold);
+  }
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: rgba(255,255,255,0.55);
+    text-transform: uppercase;
+  }
+
+  /* ══════════════════════════════════════════
+     SOBRE NOSOTROS
+  ══════════════════════════════════════════ */
+  .about { background: var(--white); }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .about-img-wrap {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+  }
+  .about-img-wrap img {
+    width: 100%;
+    height: 520px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s ease;
+  }
+  .about-img-wrap:hover img { transform: scale(1.04); }
+  .about-img-badge {
+    position: absolute;
+    bottom: 28px;
+    left: 28px;
+    background: var(--olive);
+    color: var(--white);
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    backdrop-filter: blur(10px);
+  }
+  .about-img-badge span { display: block; font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 700; }
+  .about-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 40px;
+  }
+  .about-feat {
+    background: var(--cream);
+    border-radius: var(--radius-sm);
+    padding: 20px;
+    border-left: 3px solid var(--olive);
+  }
+  .about-feat-icon { font-size: 22px; margin-bottom: 8px; }
+  .about-feat-title { font-size: 13px; font-weight: 600; color: var(--black); margin-bottom: 4px; }
+  .about-feat-text { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+  /* ══════════════════════════════════════════
+     MENU
+  ══════════════════════════════════════════ */
+  .menu { background: var(--cream); }
+  .menu-tabs {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 48px;
+  }
+  .tab-btn {
+    padding: 12px 28px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+    border: 2px solid var(--cream-dark);
+    background: var(--white);
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: var(--transition);
+    letter-spacing: 0.3px;
+  }
+  .tab-btn:hover, .tab-btn.active {
+    background: var(--olive);
+    border-color: var(--olive);
+    color: var(--white);
+    box-shadow: 0 8px 24px rgba(90,107,58,0.3);
+  }
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+  .menu-panel { display: none; }
+  .menu-panel.active { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; animation: fadeIn 0.5s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  .menu-card {
+    background: var(--white);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+    cursor: default;
+    position: relative;
+  }
+  .menu-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.14);
+  }
+  .menu-card-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+  .menu-card:hover .menu-card-img { transform: scale(1.06); }
+  .menu-card-img-wrap { overflow: hidden; position: relative; }
+  .menu-card-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: var(--red);
+    color: var(--white);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 4px 10px;
+    border-radius: 100px;
+    text-transform: uppercase;
+  }
+  .menu-card-body { padding: 20px 22px 24px; }
+  .menu-card-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--black);
+    margin-bottom: 6px;
+  }
+  .menu-card-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 16px; }
+  .menu-card-footer { display: flex; align-items: center; justify-content: space-between; }
+  .menu-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--olive);
+  }
+  .menu-order-btn {
+    background: var(--cream);
+    border: none;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    color: var(--olive);
+  }
+  .menu-order-btn:hover { background: var(--olive); color: var(--white); transform: rotate(90deg); }
+
+  /* ══════════════════════════════════════════
+     TRUST SECTION
+  ══════════════════════════════════════════ */
+  .trust {
+    background: var(--olive-dark);
+    padding: 80px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .trust::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .trust-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    position: relative;
+    z-index: 2;
+  }
+  .trust-item {
+    text-align: center;
+    padding: 40px 24px;
+    border-right: 1px solid rgba(255,255,255,0.08);
+    transition: var(--transition);
+  }
+  .trust-item:last-child { border-right: none; }
+  .trust-item:hover { background: rgba(255,255,255,0.04); }
+  .trust-icon {
+    width: 60px; height: 60px;
+    background: rgba(201,168,76,0.15);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    margin: 0 auto 20px;
+    border: 1px solid rgba(201,168,76,0.2);
+  }
+  .trust-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+  .trust-desc { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.6; }
+
+  /* ══════════════════════════════════════════
+     RESEÑAS
+  ══════════════════════════════════════════ */
+  .reviews { background: var(--white); }
+  .reviews-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 56px;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .rating-display {
+    background: var(--cream);
+    border-radius: 20px;
+    padding: 28px 32px;
+    text-align: center;
+    min-width: 180px;
+  }
+  .rating-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 56px;
+    font-weight: 700;
+    color: var(--black);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .rating-stars { font-size: 20px; margin-bottom: 6px; color: var(--gold); letter-spacing: 2px; }
+  .rating-count { font-size: 12px; color: var(--text-muted); }
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .review-card {
+    background: var(--cream);
+    border-radius: 20px;
+    padding: 28px;
+    transition: var(--transition);
+    position: relative;
+  }
+  .review-card:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
+  .review-card::before {
+    content: '"';
+    position: absolute;
+    top: 16px;
+    right: 24px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 80px;
+    color: var(--olive);
+    opacity: 0.15;
+    line-height: 1;
+  }
+  .review-stars { font-size: 14px; color: var(--gold); margin-bottom: 12px; letter-spacing: 2px; }
+  .review-text { font-size: 14px; color: var(--text-body); line-height: 1.7; margin-bottom: 20px; font-style: italic; }
+  .review-author { display: flex; align-items: center; gap: 12px; }
+  .review-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--white);
+    flex-shrink: 0;
+  }
+  .review-name { font-size: 13px; font-weight: 600; color: var(--black); }
+  .review-platform { font-size: 11px; color: var(--text-muted); }
+  .reviews-badge {
+    margin-top: 48px;
+    background: linear-gradient(135deg, var(--olive), var(--olive-light));
+    border-radius: 16px;
+    padding: 28px 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .reviews-badge-text { color: var(--white); }
+  .reviews-badge-text strong { display: block; font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+  .reviews-badge-text span { font-size: 13px; opacity: 0.8; }
+  .reviews-badge-btn {
+    background: var(--white);
+    color: var(--olive);
+    padding: 12px 28px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--transition);
+    white-space: nowrap;
+  }
+  .reviews-badge-btn:hover { background: var(--gold); color: var(--white); }
+
+  /* ══════════════════════════════════════════
+     GALERÍA
+  ══════════════════════════════════════════ */
+  .gallery { background: var(--black); padding: 100px 0; }
+  .gallery .section-title { color: var(--white); }
+  .gallery .section-tag { background: rgba(201,168,76,0.15); color: var(--gold); }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(2, 220px);
+    gap: 12px;
+    margin-top: 48px;
+  }
+  .gallery-item {
+    overflow: hidden;
+    border-radius: 12px;
+    cursor: pointer;
+  }
+  .gallery-item:nth-child(1) { grid-column: span 5; grid-row: span 2; }
+  .gallery-item:nth-child(2) { grid-column: span 4; }
+  .gallery-item:nth-child(3) { grid-column: span 3; }
+  .gallery-item:nth-child(4) { grid-column: span 3; }
+  .gallery-item:nth-child(5) { grid-column: span 4; }
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s ease;
+    display: block;
+  }
+  .gallery-item:hover img { transform: scale(1.08); }
+
+  /* ══════════════════════════════════════════
+     RESERVAS
+  ══════════════════════════════════════════ */
+  .reservations { background: var(--cream); }
+  .reservations-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .reservations-info h2 { margin-bottom: 16px; }
+  .res-highlights { margin-top: 40px; display: flex; flex-direction: column; gap: 16px; }
+  .res-hl {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    background: var(--white);
+    border-radius: 12px;
+    border-left: 3px solid var(--olive);
+  }
+  .res-hl-icon { font-size: 20px; flex-shrink: 0; }
+  .res-hl-text { font-size: 14px; color: var(--text-body); }
+  .res-hl-text strong { display: block; font-size: 13px; font-weight: 600; color: var(--black); margin-bottom: 2px; }
+  .form-card {
+    background: var(--white);
+    border-radius: 28px;
+    padding: 44px;
+    box-shadow: var(--shadow);
+  }
+  .form-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--black);
+    margin-bottom: 8px;
+  }
+  .form-subtitle { font-size: 14px; color: var(--text-muted); margin-bottom: 32px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+  .form-group label { font-size: 12px; font-weight: 600; letter-spacing: 0.5px; color: var(--black); text-transform: uppercase; }
+  .form-group input, .form-group select {
+    padding: 14px 16px;
+    border: 2px solid var(--cream-dark);
+    border-radius: 12px;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text-body);
+    background: var(--cream);
+    outline: none;
+    transition: var(--transition);
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .form-group input:focus, .form-group select:focus {
+    border-color: var(--olive);
+    background: var(--white);
+    box-shadow: 0 0 0 3px rgba(90,107,58,0.1);
+  }
+  .form-submit {
+    width: 100%;
+    padding: 16px;
+    background: var(--olive);
+    color: var(--white);
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: var(--transition);
+    letter-spacing: 0.3px;
+    margin-top: 8px;
+  }
+  .form-submit:hover { background: var(--olive-dark); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(90,107,58,0.3); }
+  .form-note { text-align: center; font-size: 12px; color: var(--text-muted); margin-top: 12px; }
+  .form-success {
+    display: none;
+    text-align: center;
+    padding: 32px;
+    background: rgba(90,107,58,0.08);
+    border-radius: 16px;
+    margin-top: 16px;
+  }
+  .form-success.show { display: block; }
+  .form-success-icon { font-size: 48px; margin-bottom: 12px; }
+  .form-success h3 { font-family: 'Cormorant Garamond', serif; font-size: 24px; color: var(--olive); margin-bottom: 8px; }
+  .form-success p { font-size: 14px; color: var(--text-muted); }
+
+  /* ══════════════════════════════════════════
+     UBICACIÓN
+  ══════════════════════════════════════════ */
+  .location { background: var(--white); }
+  .location-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+  .map-container {
+    border-radius: 24px;
+    overflow: hidden;
+    height: 400px;
+    box-shadow: var(--shadow);
+    background: var(--cream-dark);
+    position: relative;
+  }
+  .map-container iframe { width: 100%; height: 100%; border: none; display: block; }
+  .contact-cards { display: flex; flex-direction: column; gap: 16px; }
+  .contact-card {
+    background: var(--cream);
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    transition: var(--transition);
+  }
+  .contact-card:hover { transform: translateX(6px); }
+  .contact-icon {
+    width: 48px; height: 48px;
+    background: var(--olive);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .contact-info { flex: 1; }
+  .contact-label { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
+  .contact-value { font-size: 15px; font-weight: 600; color: var(--black); }
+  .contact-sub { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+  .horarios-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+  .horario-item { font-size: 12px; color: var(--text-body); }
+  .horario-item strong { color: var(--black); font-size: 11px; letter-spacing: 0.5px; text-transform: uppercase; }
+
+  /* ══════════════════════════════════════════
+     FOOTER
+  ══════════════════════════════════════════ */
+  footer {
+    background: var(--black-soft);
+    padding: 60px 0 32px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 48px;
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  .footer-logo span { display: block; font-size: 10px; font-weight: 400; letter-spacing: 3px; color: var(--gold); font-family: 'DM Sans', sans-serif; text-transform: uppercase; }
+  .footer-desc { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.7; margin-bottom: 24px; max-width: 260px; }
+  .social-links { display: flex; gap: 12px; }
+  .social-link {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    text-decoration: none;
+    transition: var(--transition);
+    color: rgba(255,255,255,0.6);
+  }
+  .social-link:hover { background: var(--olive); border-color: var(--olive); color: var(--white); transform: translateY(-3px); }
+  .footer-col-title {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 20px;
+  }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-links a {
+    font-size: 14px;
+    color: rgba(255,255,255,0.55);
+    text-decoration: none;
+    transition: var(--transition);
+  }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding-top: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .footer-copy { font-size: 12px; color: rgba(255,255,255,0.3); }
+  .footer-badge { font-size: 11px; color: rgba(255,255,255,0.3); display: flex; align-items: center; gap: 6px; }
+  .footer-badge::before { content: '♥'; color: var(--red); }
+
+  /* ══════════════════════════════════════════
+     WHATSAPP FLOAT
+  ══════════════════════════════════════════ */
+  .whatsapp-float {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .whatsapp-tooltip {
+    background: var(--black);
+    color: var(--white);
+    padding: 10px 16px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateX(10px);
+    transition: var(--transition);
+    pointer-events: none;
+  }
+  .whatsapp-float:hover .whatsapp-tooltip {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .whatsapp-btn {
+    width: 60px; height: 60px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 32px rgba(37,211,102,0.4);
+    transition: var(--transition);
+    animation: pulse-wa 2.5s ease-in-out infinite;
+    text-decoration: none;
+    font-size: 28px;
+  }
+  .whatsapp-btn:hover { transform: scale(1.12); box-shadow: 0 12px 40px rgba(37,211,102,0.5); }
+  @keyframes pulse-wa {
+    0%, 100% { box-shadow: 0 8px 32px rgba(37,211,102,0.4); }
+    50% { box-shadow: 0 8px 32px rgba(37,211,102,0.4), 0 0 0 12px rgba(37,211,102,0.1); }
+  }
+
+  /* ══════════════════════════════════════════
+     RESPONSIVE
+  ══════════════════════════════════════════ */
+  @media (max-width: 1024px) {
+    .about-grid { grid-template-columns: 1fr; gap: 48px; }
+    .menu-panel.active { grid-template-columns: repeat(2,1fr); }
+    .trust-grid { grid-template-columns: repeat(2,1fr); }
+    .trust-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .trust-item:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.08); }
+    .trust-item:last-child { border-bottom: none; }
+    .reviews-grid { grid-template-columns: 1fr 1fr; }
+    .reservations-grid { grid-template-columns: 1fr; }
+    .location-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .hero-stats-inner { grid-template-columns: repeat(2,1fr); }
+    .gallery-grid { grid-template-columns: repeat(6,1fr); grid-template-rows: repeat(3,180px); }
+    .gallery-item:nth-child(1) { grid-column: span 6; grid-row: span 1; }
+    .gallery-item:nth-child(2) { grid-column: span 3; }
+    .gallery-item:nth-child(3) { grid-column: span 3; }
+    .gallery-item:nth-child(4) { grid-column: span 3; }
+    .gallery-item:nth-child(5) { grid-column: span 3; }
+  }
+  @media (max-width: 768px) {
+    .section { padding: 72px 0; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .menu-panel.active { grid-template-columns: 1fr; }
+    .reviews-grid { grid-template-columns: 1fr; }
+    .trust-grid { grid-template-columns: 1fr; }
+    .trust-item { border-right: none !important; }
+    .about-features { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .form-card { padding: 28px 24px; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .hero-stats-inner { grid-template-columns: repeat(2,1fr); }
+    .hero-btns { flex-direction: column; align-items: flex-start; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+    .gallery-item { grid-column: span 1 !important; grid-row: span 1 !important; height: 180px; }
+    .horarios-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) {
+    .hero-stats-inner { grid-template-columns: 1fr 1fr; }
+    .stat-item { border-right: none; }
+    .stat-item:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.1); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ NAVBAR ══ -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      La Toscana Colmenar
+      <span>Restaurante & Delivery</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about">Nosotros</a></li>
+      <li><a href="#menu">Menú</a></li>
+      <li><a href="#reviews">Reseñas</a></li>
+      <li><a href="#gallery">Galería</a></li>
+      <li><a href="#contact">Contacto</a></li>
+      <li><a href="#reservations" class="nav-cta">Reservar</a></li>
+    </ul>
+    <div class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Colmenar Viejo · Madrid</div>
+    <h1 class="hero-title">
+      Sabor auténtico<br><em>en cada bocado</em>
+    </h1>
+    <p class="hero-subtitle">
+      Pizzas artesanas, kebab premium, y lo mejor de todas las raciones preparados al momento. Ingredientes frescos, atención cercana y el calor de siempre.<br>
+      <strong>Precio medio: 10-20 € por persona</strong>
+    </p>
+    <div class="hero-btns">
+      <a href="#reservations" class="btn-primary">
+        🍽️ Reservar mesa
+      </a>
+      <a href="https://wa.me/34631827808?text=Hola,%20me%20gustaría%20hacer%20un%20pedido" class="btn-secondary">
+        📦 Pedir ahora
+      </a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Descubrir</span>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stats-inner">
+      <div class="stat-item">
+        <span class="stat-num">+8</span>
+        <span class="stat-label">Años de sabor</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">4.2★</span>
+        <span class="stat-label">Valoración Google</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">+50</span>
+        <span class="stat-label">Platos en carta</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">30'</span>
+        <span class="stat-label">Entrega express</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SOBRE NOSOTROS ══ -->
+<section class="about section" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img-wrap fade-up">
+        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=80" alt="Interior La Toscana Colmenar">
+        <div class="about-img-badge">
+          <span>+8</span>
+          años con vosotros
+        </div>
+      </div>
+      <div>
+        <div class="fade-up">
+          <div class="section-tag">Nuestra historia</div>
+          <h2 class="section-title">Del barrio<br>para el barrio</h2>
+          <p class="section-subtitle">
+            Nacimos con una idea sencilla: ofrecer comida de calidad a precio justo, con el trato de toda la vida. Hoy somos un rincón de referencia en Colmenar Viejo, donde la variedad y el cariño hacen que repitas.
+          </p>
+        </div>
+        <div class="fade-up delay-1" style="margin-top:20px;">
+          <p class="section-subtitle">
+            Hemos escuchado a nuestros clientes y nos hemos puesto manos a la obra: nuevos procesos, formación en servicio al cliente y un compromiso firme con la mejora continua. Porque lo más importante para nosotros sois vosotros.
+          </p>
+        </div>
+        <div class="about-features fade-up delay-2">
+          <div class="about-feat">
+            <div class="about-feat-icon">🌿</div>
+            <div class="about-feat-title">Ingredientes frescos</div>
+            <div class="about-feat-text">Seleccionamos los mejores productos cada día para garantizar el mejor sabor.</div>
+          </div>
+          <div class="about-feat">
+            <div class="about-feat-icon">👨‍🍳</div>
+            <div class="about-feat-title">Preparado al momento</div>
+            <div class="about-feat-text">Cada pedido sale de nuestra cocina recién hecho, sin esperas innecesarias.</div>
+          </div>
+          <div class="about-feat">
+            <div class="about-feat-icon">💬</div>
+            <div class="about-feat-title">Trato cercano</div>
+            <div class="about-feat-text">Somos un equipo comprometido con vuestra satisfacción en cada visita.</div>
+          </div>
+          <div class="about-feat">
+            <div class="about-feat-icon">💶</div>
+            <div class="about-feat-title">Precio justo</div>
+            <div class="about-feat-text">Calidad real sin que el bolsillo sufra. Menús para todos los gustos.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CONFIANZA ══ -->
+<section class="trust" id="trust">
+  <div class="container">
+    <div class="trust-grid">
+      <div class="trust-item fade-up">
+        <div class="trust-icon">⚡</div>
+        <div class="trust-title">Pedidos al momento</div>
+        <div class="trust-desc">Preparamos cada plato cuando llega tu pedido. Sin pre-elaborados, sin esperas innecesarias.</div>
+      </div>
+      <div class="trust-item fade-up delay-1">
+        <div class="trust-icon">🏅</div>
+        <div class="trust-title">Compromiso con la calidad</div>
+        <div class="trust-desc">Revisamos continuamente nuestros procesos para darte la mejor experiencia posible.</div>
+      </div>
+      <div class="trust-item fade-up delay-2">
+        <div class="trust-icon">🤝</div>
+        <div class="trust-title">Atención mejorada</div>
+        <div class="trust-desc">Hemos invertido en formación y en escuchar a nuestros clientes. El cambio se nota.</div>
+      </div>
+      <div class="trust-item fade-up delay-3">
+        <div class="trust-icon">🛵</div>
+        <div class="trust-title">Entrega rápida y cuidada</div>
+        <div class="trust-desc">Tu comida llega caliente, bien presentada y en el tiempo que necesitas.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ MENÚ ══ -->
+<section class="menu section" id="menu">
+  <div class="container">
+    <div class="fade-up" style="margin-bottom:12px">
+      <div class="section-tag">Lo que hacemos</div>
+      <h2 class="section-title">Nuestro menú</h2>
+      <p class="section-subtitle">Una carta pensada para todos los gustos. Desde las pizzas más clásicas hasta hamburguesas con personalidad.</p>
+    </div>
+    <div class="menu-tabs fade-up delay-1" style="margin-top:40px">
+      <button class="tab-btn active" onclick="showTab('pizzas',this)">🍕 Pizzas</button>
+      <button class="tab-btn" onclick="showTab('especiales',this)">🌯 Kebab & Platos</button>
+      <button class="tab-btn" onclick="showTab('ensaladas',this)">🥗 Ensaladas & Bocadillos</button>
+      <button class="tab-btn" onclick="showTab('raciones',this)">🍟 Raciones</button>
+      <button class="tab-btn" onclick="showTab('postres',this)">🍮 Postres</button>
+    </div>
+
+    <!-- PIZZAS -->
+    <div class="menu-panel active" id="tab-pizzas">
+      <!-- Pizzas Medianas -->
+      <div class="menu-card fade-up">
+        <div class="menu-card-img-wrap">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&q=80" alt="Pizza Barbacoa">
+          <span class="menu-card-badge">Mediana 30cm</span>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Pizza Barbacoa</div>
+          <div class="menu-card-desc">Salsa de tomate, mozzarella, carne picada, bacon y salsa barbacoa.</div>
+          <div class="menu-card-footer">
+            <span class="menu-price">10,00€</span>
+            <button class="menu-order-btn" title="Pedir">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card fade-up">
+        <div class="menu-card-img-wrap">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&q=80" alt="Pizza 4 Quesos">
+          <span class="menu-card-badge">Mediana 30cm</span>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Pizza 4 Quesos</div>
+          <div class="menu-card-desc">Mezcla selecta de cuatro quesos sobre base de tomate y mozzarella.</div>
+          <div class="menu-card-footer">
+            <span class="menu-price">9,00€</span>
+            <button class="menu-order-btn" title="Pedir">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card fade-up">
+        <div class="menu-card-img-wrap">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1628840042765-356cda07504e?w=400&q=80" alt="Pizza Pepperoni">
+          <span class="menu-card-badge">Mediana 30cm</span>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Pizza Pepperoni</div>
+          <div class="menu-card-desc">Salsa de tomate, mozzarella, pepperoni y aceitunas negras.</div>
+          <div class="menu-card-footer">
+            <span class="menu-price">10,00€</span>
+            <button class="menu-order-btn" title="Pedir">+</button>
+          </div>
+        </div>
+      </div>
+      <!-- Pequeñas -->
+      <div class="menu-card fade-up">
+        <div class="menu-card-img-wrap">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400&q=80" alt="Pizza Ibérica">
+          <span class="menu-card-badge">Pequeña 24cm</span>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Pizza Ibérica</div>
+          <div class="menu-card-desc">Jamón ibérico y queso curado sobre base de tomate y mozzarella.</div>
+          <div class="menu-card-footer">
+            <span class="menu-price">9,00€</span>
+            <button class="menu-order-btn" title="Pedir">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card fade-up">
+        <div class="menu-card-img-wrap">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1593560708920-61dd99c46a01?w=400&q=80" alt="Pizza Carbonara">
+          <span class="menu-card-badge">Pequeña 24cm</span>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Pizza Carbonara</div>
+          <div class="menu-card-desc">Nata, mozzarella, champiñones y bacon.</div>
+          <div class="menu-card-footer">
+            <span class="menu-price">8,00€</span>
+            <button class="menu-order-btn" title="Pedir">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card fade-up">
+        <div class="menu-card-img-wrap">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400&q=80" alt="Pizza Margarita">
+          <span class="menu-card-badge">Pequeña 24cm</span>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Pizza Margarita</div>
+          <div class="menu-card-desc">Aceite de oliva, orégano, salsa de tomate y mozzarella.</div>
+          <div class="menu-card-footer">
+            <span class="menu-price">6,00€</span>
+            <button class="menu-order-btn" title="Pedir">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ESPECIALES & KEBAB -->
+    <div class="menu-panel" id="tab-especiales">
+      <div class="menu-card fade-up">
+        <div class="menu-card-img-wrap">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1633348068527-425ca86548bc?w=400&q=80" alt="Cachopo">
+          <span class="menu-card-badge">Especialidad</span>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Cachopo</div>
+          <div class="menu-card-desc">Con patatas fritas y pimiento de piquillo. Extra crujiente.</div>
+          <div class="menu-card-footer">
+            <span class="menu-price">10,80€</span>
+            <button class="menu-order-btn" title="Pedir">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card fade-up">
+        <div class="menu-card-img-wrap">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=400&q=80" alt="Durum">
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Durum de Pollo</div>
+          <div class="menu-card-desc">Pollo marinado, ensalada fresca y nuestra salsa especial blanca.</div>
+          <div class="menu-card-footer">
+            <span class="menu-price">6,00€</span>
+            <button class="menu-order-btn" title="Pedir">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card fade-up">
+        <div class="menu-card-img-wrap">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400&q=80" alt="Plato Kebab">
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Plato Kebab Mixto</div>
+          <div class="menu-card-desc">Carne mixta acompañada de patatas y ensalada. Muy completo.</div>
+          <div class="menu-card-footer">
+            <span class="menu-price">8,50€</span>
+            <button class="menu-order-btn" title="Pedir">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card fade-up">
+        <div class="menu-card-img-wrap">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1619194617062-5a61b9c6a049?w=400&q=80" alt="Pizza Turca">
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Pizza Turca</div>
+          <div class="menu-card-desc">Base de masa fina con carne picada especiada y vegetales.</div>
+          <div class="menu-card-footer">
+            <span class="menu-price">6,50€</span>
+            <button class="menu-order-btn" title="Pedir">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card fade-up">
+        <div class="menu-card-img-wrap">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1606755962773-d32330556252?w=400&q=80" alt="Alitas Plato">
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Plato de Alitas</div>
+          <div class="menu-card-desc">Crujientes alitas con guarnición de patatas y ensalada.</div>
+          <div class="menu-card-footer">
+            <span class="menu-price">8,50€</span>
+            <button class="menu-order-btn" title="Pedir">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card fade-up">
+        <div class="menu-card-img-wrap">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1414450397866-85f90db48714?w=400&q=80" alt="Kebab">
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Kebab Pollo</div>
+          <div class="menu-card-desc">Pan de pita caliente con pollo, ensalada y salsas.</div>
+          <div class="menu-card-footer">
+            <span class="menu-price">5,00€</span>
+            <button class="menu-order-btn" title="Pedir">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ENSALADAS & BOCADILLOS -->
+    <div class="menu-panel" id="tab-ensaladas">
+      <div class="menu-card fade-up">
+        <div class="menu-card-img-wrap">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&q=80" alt="Ensalada Paisana">
+          <span class="menu-card-badge">Favorita</span>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Ensalada Paisana</div>
+          <div class="menu-card-desc">Huevo, aceitunas, lechuga, tomate, cebolla, maíz y queso.</div>
+          <div class="menu-card-footer">
+            <span class="menu-price">8,00€</span>
+            <button class="menu-order-btn" title="Pedir">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card fade-up">
+        <div class="menu-card-img-wrap">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1525351484163-7529414344d8?w=400&q=80" alt="Bocadillo Jamón">
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Bocadillo de Jamón Ibérico</div>
+          <div class="menu-card-desc">Con queso fundido y pan crujiente recién horneado.</div>
+          <div class="menu-card-footer">
+            <span class="menu-price">6,50€</span>
+            <button class="menu-order-btn" title="Pedir">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card fade-up">
+        <div class="menu-card-img-wrap">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1550547660-d9450f859349?w=400&q=80" alt="Bocadillo Calamares">
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Bocadillo de Calamares</div>
+          <div class="menu-card-desc">Con lechuga fresca y mayonesa suave. Un clásico.</div>
+          <div class="menu-card-footer">
+            <span class="menu-price">6,50€</span>
+            <button class="menu-order-btn" title="Pedir">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card fade-up">
+        <div class="menu-card-img-wrap">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&q=80" alt="Ensalada Pollo">
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Ensalada de Pollo</div>
+          <div class="menu-card-desc">Lechuga, tomate, cebolla, maíz, zanahoria y aceitunas.</div>
+          <div class="menu-card-footer">
+            <span class="menu-price">8,00€</span>
+            <button class="menu-order-btn" title="Pedir">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RACIONES -->
+    <div class="menu-panel" id="tab-raciones">
+      <div class="menu-card fade-up">
+        <div class="menu-card-img-wrap">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1567622445877-a149a7fa2943?w=400&q=80" alt="Alitas">
+          <span class="menu-card-badge">10 Unidades</span>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Alitas de Pollo</div>
+          <div class="menu-card-desc">Diez alitas doradas y crujientes con su toque justo de sal.</div>
+          <div class="menu-card-footer">
+            <span class="menu-price">7,00€</span>
+            <button class="menu-order-btn" title="Pedir">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card fade-up">
+        <div class="menu-card-img-wrap">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=400&q=80" alt="Nuggets">
+          <span class="menu-card-badge">10 Unidades</span>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Nuggets de Pollo</div>
+          <div class="menu-card-desc">Tiernos bocados de pollo empanados, ideales para compartir.</div>
+          <div class="menu-card-footer">
+            <span class="menu-price">7,00€</span>
+            <button class="menu-order-btn" title="Pedir">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card fade-up">
+        <div class="menu-card-img-wrap">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1567622445877-a149a7fa2943?w=400&q=80" alt="Croquetas">
+          <span class="menu-card-badge">10 Unidades</span>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Croquetas de Pollo</div>
+          <div class="menu-card-desc">Cremosas por dentro y crujientes por fuera. Caseras.</div>
+          <div class="menu-card-footer">
+            <span class="menu-price">7,00€</span>
+            <button class="menu-order-btn" title="Pedir">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card fade-up">
+        <div class="menu-card-img-wrap">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1593504049359-74330189a055?w=400&q=80" alt="Patatas Bravas">
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Patatas Bravas</div>
+          <div class="menu-card-desc">Patatas caseras con nuestra salsa brava especial.</div>
+          <div class="menu-card-footer">
+            <span class="menu-price">6,00€</span>
+            <button class="menu-order-btn" title="Pedir">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card fade-up">
+        <div class="menu-card-img-wrap">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1576107232684-1279f390859f?w=400&q=80" alt="Salchipapas">
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Salchipapas</div>
+          <div class="menu-card-desc">La combinación clásica de salchichas y patatas fritas.</div>
+          <div class="menu-card-footer">
+            <span class="menu-price">6,00€</span>
+            <button class="menu-order-btn" title="Pedir">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POSTRES -->
+    <div class="menu-panel" id="tab-postres">
+      <div class="menu-card fade-up">
+        <div class="menu-card-img-wrap">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1567206563114-c179706a56c4?w=400&q=80" alt="Coulant">
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Coulant de Chocolate</div>
+          <div class="menu-card-desc">Bizcocho caliente con corazón de chocolate fundido.</div>
+          <div class="menu-card-footer">
+            <span class="menu-price">5,00€</span>
+            <button class="menu-order-btn" title="Pedir">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card fade-up">
+        <div class="menu-card-img-wrap">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400&q=80" alt="Tiramisu">
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Tiramisú</div>
+          <div class="menu-card-desc">Receta artesanal con mascarpone y café de primera.</div>
+          <div class="menu-card-footer">
+            <span class="menu-price">5,00€</span>
+            <button class="menu-order-btn" title="Pedir">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card fade-up">
+        <div class="menu-card-img-wrap">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=400&q=80" alt="Tarta Queso">
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Tarta de Queso</div>
+          <div class="menu-card-desc">Suave y cremosa tarta con mermelada de frutos rojos.</div>
+          <div class="menu-card-footer">
+            <span class="menu-price">5,00€</span>
+            <button class="menu-order-btn" title="Pedir">+</button>
+          </div>
+        </div>
+      </div>
+      <!-- Más Postres -->
+      <div class="menu-card fade-up">
+        <div class="menu-card-img-wrap">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1551024601-bec78aea704b?w=400&q=80" alt="Profiteroles">
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Profiteroles</div>
+          <div class="menu-card-desc">Rellenos de nata y bañados en chocolate caliente.</div>
+          <div class="menu-card-footer">
+            <span class="menu-price">5,00€</span>
+            <button class="menu-order-btn" title="Pedir">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card fade-up">
+        <div class="menu-card-img-wrap">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1512152272829-e3139599d60f?w=400&q=80" alt="Brownie">
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Brownie</div>
+          <div class="menu-card-desc">Bizcocho de chocolate con nueces y helado de vainilla.</div>
+          <div class="menu-card-footer">
+            <span class="menu-price">5,00€</span>
+            <button class="menu-order-btn" title="Pedir">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+  </div>
+</section>
+
+<!-- ══ RESEÑAS ══ -->
+<section class="reviews section" id="reviews">
+  <div class="container">
+    <div class="reviews-header">
+      <div>
+        <div class="section-tag fade-up">Lo que dicen de nosotros</div>
+        <h2 class="section-title fade-up delay-1">Nuestros clientes<br>hablan por nosotros</h2>
+      </div>
+      <div class="rating-display fade-up">
+        <div class="rating-num">4.2</div>
+        <div class="rating-stars">★★★★☆</div>
+        <div class="rating-count">Valoración en Google</div>
+      </div>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card fade-up">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">Las pizzas están riquísimas y la atención es muy amable. Llevamos años pidiendo aquí y siempre repetimos. El kebab también es de los mejores que he probado en la zona.</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background:var(--olive)">M</div>
+          <div>
+            <div class="review-name">María G.</div>
+            <div class="review-platform">Google Reviews</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card fade-up delay-1">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">Muy buen precio para la calidad que ofrecen. El personal es simpático y los tiempos de espera son razonables. La pizza de cuatro quesos es espectacular, la recomiendo sin dudarlo.</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background:var(--red)">C</div>
+          <div>
+            <div class="review-name">Carlos M.</div>
+            <div class="review-platform">Google Reviews</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card fade-up delay-2">
+        <div class="review-stars">★★★★☆</div>
+        <p class="review-text">Pedí delivery el viernes y llegó caliente y bien embalado. Se nota que han mejorado mucho el servicio. La hamburguesa doble es enorme, vale cada céntimo. Volveré sin duda.</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background:var(--gold)">A</div>
+          <div>
+            <div class="review-name">Ana R.</div>
+            <div class="review-platform">Google Reviews</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card fade-up">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">Sitio de referencia en Colmenar. La variedad del menú es increíble, hay para todos los gustos. El trato es siempre cercano y el precio es muy competitivo para la calidad que dan.</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background:#6c5ce7">J</div>
+          <div>
+            <div class="review-name">Javier P.</div>
+            <div class="review-platform">Google Reviews</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card fade-up delay-1">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">Fui con mis hijos y salimos encantados. La atención fue excelente desde el minuto uno. La pizza para niños les encantó y las raciones son generosas. Definitivamente volveremos.</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background:#00b894">L</div>
+          <div>
+            <div class="review-name">Laura S.</div>
+            <div class="review-platform">Google Reviews</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card fade-up delay-2">
+        <div class="review-stars">★★★★☆</div>
+        <p class="review-text">Buena relación calidad-precio. He notado mejoras en el servicio en mis últimas visitas, se nota que se preocupan por los clientes. El döner kebab es de los que más me gustan.</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background:#e17055">D</div>
+          <div>
+            <div class="review-name">David F.</div>
+            <div class="review-platform">Google Reviews</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="reviews-badge fade-up" style="margin-top:40px">
+      <div class="reviews-badge-text">
+        <strong>🏆 Premio a la Mejora Continua</strong>
+        <span>Comprometidos con ser mejores cada día gracias a vuestros comentarios</span>
+      </div>
+      <a href="https://g.page/r/XXXX/review" class="reviews-badge-btn">Dejanos tu opinión</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ GALERÍA ══ -->
+<section class="gallery" id="gallery">
+  <div class="container">
+    <div class="fade-up">
+      <div class="section-tag">Galería</div>
+      <h2 class="section-title">Comida que entra<br>por los ojos</h2>
+    </div>
+    <div class="gallery-grid fade-up delay-1">
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600&q=80" alt="Pizza">
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=80" alt="Hamburguesa">
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=400&q=80" alt="Kebab">
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400&q=80" alt="Postre">
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400&q=80" alt="Local">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ RESERVAS ══ -->
+<section class="reservations section" id="reservations">
+  <div class="container">
+    <div class="reservations-grid">
+      <div>
+        <div class="fade-up">
+          <div class="section-tag">Reservas</div>
+          <h2 class="section-title">Tu mesa<br>te espera</h2>
+          <p class="section-subtitle">
+            Reserva en segundos y olvídate de esperas. Para grupos, celebraciones o simplemente una noche especial.
+          </p>
+        </div>
+        <div class="res-highlights fade-up delay-1">
+          <div class="res-hl">
+            <div class="res-hl-icon">📞</div>
+            <div class="res-hl-text">
+              <strong>Confirmación inmediata</strong>
+              Te llamamos o escribimos en menos de 10 minutos para confirmar.
+            </div>
+          </div>
+          <div class="res-hl">
+            <div class="res-hl-icon">🎉</div>
+            <div class="res-hl-text">
+              <strong>Celebraciones y grupos</strong>
+              Adaptamos el local y la carta para tu evento especial sin coste extra.
+            </div>
+          </div>
+          <div class="res-hl">
+            <div class="res-hl-icon">🔄</div>
+            <div class="res-hl-text">
+              <strong>Cancelación flexible</strong>
+              Puedes cancelar o cambiar tu reserva hasta 2 horas antes sin problema.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="fade-up delay-2">
+        <div class="form-card">
+          <div class="form-title">Reservar mesa</div>
+          <div class="form-subtitle">Completa los datos y te confirmamos enseguida ✨</div>
+          <form id="reservationForm" onsubmit="handleSubmit(event)">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" placeholder="Tu nombre" required>
+              </div>
+              <div class="form-group">
+                <label for="telefono">Teléfono</label>
+                <input type="tel" id="telefono" placeholder="+34 600 000 000" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="personas">Personas</label>
+                <select id="personas">
+                  <option value="">¿Cuántos sois?</option>
+                  <option>1 persona</option>
+                  <option>2 personas</option>
+                  <option>3 personas</option>
+                  <option>4 personas</option>
+                  <option>5 personas</option>
+                  <option>6 personas</option>
+                  <option>+6 personas</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="fecha">Fecha</label>
+                <input type="date" id="fecha" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="hora">Hora</label>
+              <select id="hora">
+                <option value="">Selecciona hora</option>
+                <option>13:00</option>
+                <option>13:30</option>
+                <option>14:00</option>
+                <option>14:30</option>
+                <option>20:00</option>
+                <option>20:30</option>
+                <option>21:00</option>
+                <option>21:30</option>
+                <option>22:00</option>
+              </select>
+            </div>
+            <button type="submit" class="form-submit">🍽️ Reservar ahora</button>
+            <div class="form-note">Sin tarjeta de crédito · Confirmación en minutos</div>
+          </form>
+          <div class="form-success" id="formSuccess">
+            <div class="form-success-icon">🎉</div>
+            <h3>¡Reserva recibida!</h3>
+            <p>Te contactaremos en los próximos minutos para confirmar tu mesa. ¡Hasta pronto!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ UBICACIÓN ══ -->
+<section class="location section" id="contact">
+  <div class="container">
+    <div class="fade-up" style="margin-bottom:56px">
+      <div class="section-tag">Dónde encontrarnos</div>
+      <h2 class="section-title">Ven a visitarnos</h2>
+    </div>
+    <div class="location-grid">
+      <div class="map-container fade-up">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3024.1107!2d-3.7663!3d40.6601!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd43d7c57613677b%3A0xc3c9f9570183e979!2sC.%20de%20la%20Cruz%20del%20Alamillo%2C%201%2C%2028770%20Colmenar%20Viejo%2C%20Madrid!5e0!3m2!1ses!2ses!4v1711746000000"
+          allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+      <div class="contact-cards fade-up delay-1">
+        <div class="contact-card">
+          <div class="contact-icon">📍</div>
+          <div class="contact-info">
+            <div class="contact-label">Dirección</div>
+            <div class="contact-value">C. de la Cruz del Alamillo, 1</div>
+            <div class="contact-sub">28770 Colmenar Viejo, Madrid<br><small style="opacity:0.6">Plus Code: M65P+62 Colmenar Viejo</small></div>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon">📞</div>
+          <div class="contact-info">
+            <div class="contact-label">Teléfono</div>
+            <div class="contact-value">631 82 78 08</div>
+            <div class="contact-sub">También pedidos por WhatsApp</div>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon">🕐</div>
+          <div class="contact-info">
+            <div class="contact-label">Horarios</div>
+            <div class="contact-value">Abierto hoy</div>
+            <div class="horarios-grid" style="margin-top:10px">
+              <div class="horario-item">
+                <strong>Lunes – Domingo</strong><br>
+                12:00 – 16:00<br>
+                19:00 – 23:30
+              </div>
+            </div>
+            <div class="contact-sub" style="margin-top:8px; font-size:11px">El horario podría cambiar en días festivos.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">
+          La Toscana Colmenar
+          <span>Restaurante & Delivery</span>
+        </div>
+        <p class="footer-desc">
+          Sabor auténtico en el corazón de Colmenar Viejo. Pizzas, kebabs y hamburguesas preparados con ingredientes frescos y mucho cariño.
+        </p>
+        <div class="social-links">
+          <a class="social-link" href="#" aria-label="Instagram">📸</a>
+          <a class="social-link" href="#" aria-label="Facebook">👍</a>
+          <a class="social-link" href="https://wa.me/34631827808" aria-label="WhatsApp">💬</a>
+          <a class="social-link" href="#" aria-label="TikTok">🎵</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Carta</div>
+        <ul class="footer-links">
+          <li><a href="#menu">Ensaladas</a></li>
+          <li><a href="#menu">Pizzas</a></li>
+          <li><a href="#menu">Kebab & Platos</a></li>
+          <li><a href="#menu">Postres</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Información</div>
+        <ul class="footer-links">
+          <li><a href="#about">Sobre nosotros</a></li>
+          <li><a href="#reviews">Reseñas</a></li>
+          <li><a href="#gallery">Galería</a></li>
+          <li><a href="#reservations">Reservas</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Contacto</div>
+        <ul class="footer-links" style="color:rgba(255,255,255,0.4); font-size:13px; line-height:1.6">
+          <li>📍 C. de la Cruz del Alamillo, 1</li>
+          <li>📞 631 82 78 08</li>
+          <li>💬 WhatsApp disponible</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">&copy; 2026 La Toscana Colmenar. Todos los derechos reservados.</div>
+      <div class="footer-badge">Hecho con pasión por el sabor</div>
+    </div>
+  </div>
+</footer>
+
+<!-- ══ WHATSAPP FLOAT ══ -->
+<div class="whatsapp-float">
+  <div class="whatsapp-tooltip">¿Tienes hambre? ¡Escríbenos!</div>
+  <a href="https://wa.me/34631827808?text=Hola,%20me%20gustaría%20hacer%20un%20pedido" class="whatsapp-btn" target="_blank" aria-label="WhatsApp">
+    <span style="display:flex; align-items:center; justify-content:center; width:100%; height:100%;">💬</span>
+  </a>
+</div>
+
+<script>
+  /* ── NAVBAR SCROLL ── */
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  /* ── HAMBURGER ── */
+  document.getElementById('hamburger').addEventListener('click', function() {
+    const links = document.querySelector('.nav-links');
+    links.style.display = links.style.display === 'flex' ? 'none' : 'flex';
+    links.style.flexDirection = 'column';
+    links.style.position = 'absolute';
+    links.style.top = '72px';
+    links.style.left = '0';
+    links.style.right = '0';
+    links.style.background = 'rgba(247,243,235,0.98)';
+    links.style.padding = '24px';
+    links.style.gap = '20px';
+    links.style.backdropFilter = 'blur(20px)';
+    links.style.boxShadow = '0 20px 40px rgba(0,0,0,0.1)';
+  });
+
+  /* ── MENU TABS ── */
+  function showTab(tabName, btn) {
+    document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + tabName).classList.add('active');
+    btn.classList.add('active');
+    // Re-trigger fade
+    document.querySelectorAll('#tab-' + tabName + ' .fade-up').forEach((el, i) => {
+      el.classList.remove('visible');
+      setTimeout(() => el.classList.add('visible'), i * 80);
+    });
+  }
+
+  /* ── INTERSECTION OBSERVER ── */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  /* ── FORM ── */
+  function handleSubmit(e) {
+    e.preventDefault();
+    const form = document.getElementById('reservationForm');
+    const success = document.getElementById('formSuccess');
+    form.style.display = 'none';
+    success.classList.add('show');
+    // In production: send to WhatsApp or backend
+    const nombre = document.getElementById('nombre').value;
+    const personas = document.getElementById('personas').value;
+    const fecha = document.getElementById('fecha').value;
+    const hora = document.getElementById('hora').value;
+    const msg = `Hola! Quiero reservar una mesa.\nNombre: ${nombre}\nPersonas: ${personas}\nFecha: ${fecha}\nHora: ${hora}`;
+    // Optionally open WhatsApp with the data
+    // window.open(`https://wa.me/34631827808?text=${encodeURIComponent(msg)}`);
+  }
+
+  /* ── MIN DATE for form ── */
+  const dateInput = document.getElementById('fecha');
+  if (dateInput) {
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.setAttribute('min', today);
+  }
+
+  /* ── SMOOTH HOVER on menu btns ── */
+  document.querySelectorAll('.menu-order-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      this.style.background = 'var(--olive)';
+      this.style.color = 'white';
+      this.textContent = '✓';
+      setTimeout(() => {
+        this.style.background = '';
+        this.style.color = '';
+        this.textContent = '+';
+      }, 1200);
+    });
+  });
+</script>
+</body>
+</html>
