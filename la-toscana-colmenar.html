@@ -962,6 +962,46 @@
     .stat-item { border-right: none; }
     .stat-item:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.1); }
   }
+
+  /* ── COOKIE BANNER ── */
+  .cookie-banner {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: var(--black-soft);
+    color: var(--white);
+    padding: 20px 40px;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    transform: translateY(100%);
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    box-shadow: 0 -10px 40px rgba(0,0,0,0.2);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .cookie-banner.show { transform: translateY(0); }
+  .cookie-text { font-size: 13px; font-weight: 300; line-height: 1.5; color: rgba(255,255,255,0.7); }
+  .cookie-text a { color: var(--gold); text-decoration: none; font-weight: 500; }
+  .cookie-btns { display: flex; gap: 12px; }
+  .cookie-btn-accept {
+    background: var(--gold);
+    color: var(--black);
+    border: none;
+    padding: 10px 24px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+  .cookie-btn-accept:hover { background: var(--white); transform: translateY(-2px); }
+  
+  @media (max-width: 768px) {
+    .cookie-banner { flex-direction: column; text-align: center; padding: 24px; }
+    .cookie-btns { width: 100%; justify-content: center; }
+  }
 </style>
 </head>
 <body>
@@ -1801,6 +1841,8 @@
           <li><a href="#menu">Pizzas</a></li>
           <li><a href="#menu">Kebab & Platos</a></li>
           <li><a href="#menu">Postres</a></li>
+          <li style="margin-top:10px;"><a href="politica-privacidad.html" style="font-size:11px; opacity:0.6;">Política de Privacidad</a></li>
+          <li><a href="politica-cookies.html" style="font-size:11px; opacity:0.6;">Política de Cookies</a></li>
         </ul>
       </div>
       <div>
@@ -1834,6 +1876,17 @@
   <a href="https://wa.me/34631827808?text=Hola,%20me%20gustaría%20hacer%20un%20pedido" class="whatsapp-btn" target="_blank" aria-label="WhatsApp">
     <span style="display:flex; align-items:center; justify-content:center; width:100%; height:100%;">💬</span>
   </a>
+</div>
+
+<!-- ══ COOKIE CONSENT ══ -->
+<div class="cookie-banner" id="cookieBanner">
+  <div class="cookie-text">
+    Utilizamos cookies propias y de terceros para mejorar su experiencia. Al continuar navegando, acepta nuestra 
+    <a href="politica-cookies.html">Política de Cookies</a>.
+  </div>
+  <div class="cookie-btns">
+    <button class="cookie-btn-accept" onclick="acceptCookies()">Aceptar todas</button>
+  </div>
 </div>
 
 <script>
@@ -1919,6 +1972,20 @@
         this.textContent = '+';
       }, 1200);
     });
+  });
+
+  /* ── COOKIE LOGIC ── */
+  function acceptCookies() {
+    localStorage.setItem('cookieConsent', 'true');
+    document.getElementById('cookieBanner').classList.remove('show');
+  }
+
+  window.addEventListener('load', () => {
+    if (!localStorage.getItem('cookieConsent')) {
+      setTimeout(() => {
+        document.getElementById('cookieBanner').classList.add('show');
+      }, 2000);
+    }
   });
 </script>
 </body>
